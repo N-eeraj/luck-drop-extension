@@ -13,7 +13,7 @@ function handleViewChange(v: View) {
 </script>
 
 <template>
-  <main class="w-fit min-h-48 min-w-48 p-4 bg-background text-foreground">
+  <main class="relative w-fit min-h-48 min-w-48 p-4 bg-background text-foreground">
     <Menu
       v-if="view === View.Menu"
       @menu-selection="handleViewChange" />

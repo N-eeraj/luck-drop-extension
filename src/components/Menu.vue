@@ -5,27 +5,33 @@ import { View } from "../types.ts"
 const emit = defineEmits([
   "menu-selection",
 ])
+
+const menuOptions = [
+  {
+    label: "Coin Flip",
+    value: View.CoinFlip,
+  },
+  {
+    label: "Dice Roll",
+    value: View.DiceRoll,
+  },
+]
 </script>
 
 <template>
   <div class="flex justify-center items-center flex-col gap-y-6">
-    <h1 class="text-primary text-2xl font-semibold">
+    <h1 class="text-foreground text-2xl font-semibold">
       Luck Drop
     </h1>
 
     <ul class="w-full px-4 space-y-3">
-      <li>
+      <li
+        v-for="({ label, value }) in menuOptions"
+        :key="value">
         <Button
           class="w-full"
-          @click="emit('menu-selection', View.CoinFlip)">
-          Coin Flip
-        </Button>
-      </li>
-      <li>
-        <Button
-          class="w-full"
-          @click="emit('menu-selection', View.DiceRoll)">
-          Dice Roll
+          @click="emit('menu-selection', value)">
+          {{ label }}
         </Button>
       </li>
     </ul>
