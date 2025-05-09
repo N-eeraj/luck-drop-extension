@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import useApp from "../composables/useApp.ts"
+import useAppContext from "../composables/useApp.ts"
 import { View } from '../types'
 
-const { setView } = useApp()
+const { setView } = useAppContext()
 </script>
 
 <template>

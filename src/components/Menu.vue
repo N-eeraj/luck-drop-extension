@@ -1,9 +1,9 @@
 <script setup lang="ts">
 import Button from "./Base/Button.vue"
-import useApp from "../composables/useApp.ts"
+import useAppContext from "../composables/useApp.ts"
 import { View } from "../types.ts"
 
-const { setView } = useApp()
+const { setView } = useAppContext()
 
 const menuOptions = [
   {

@@ -1,36 +1,22 @@
-import {
-  reactive,
-  provide,
-  inject,
-} from "vue"
+import { reactive } from "vue"
 import { View } from "../types.ts"
+import useContext from "./useContext.ts"
 
-const defaultApp = {
-  view: View.Menu,
-}
+const key = Symbol()
 
-const AppContextKey = Symbol("appContext")
-
-export function useAppProvider() {
-  const app = reactive(defaultApp)
+export default function useAppContext() {
+  const app = reactive({
+    view: View.Menu,
+  })
 
   function setView(view: View) {
     app.view = view
   }
 
-  provide(AppContextKey, {
+  const context = useContext(key, {
     app,
     setView,
   })
-  return app
-}
 
-export default function useApp() {
-  const appContext = inject<typeof defaultApp>(AppContextKey)
-
-  if (!appContext) {
-    throw new Error("Must be used within a provider")
-  }
-
-  return appContext
+  return context
 }
