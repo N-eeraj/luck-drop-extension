@@ -3,7 +3,7 @@ import Menu from "./components/Menu.vue"
 import CoinFlip from "./components/CoinFlip/index.vue"
 import DiceRoll from "./components/DiceRoll/index.vue"
 
-import useAppContext from "./composables/useApp.ts"
+import useAppContext from "./composables/useAppContext.ts"
 import { View } from "./types.ts"
 
 const { app } = useAppContext()

@@ -1,6 +1,6 @@
 import { reactive } from "vue"
+import useContext from "@n-eeraj/use-composables/useContext"
 import { View } from "../types.ts"
-import useContext from "./useContext.ts"
 
 const key = Symbol()
 

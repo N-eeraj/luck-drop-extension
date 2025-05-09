@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Button from "./Base/Button.vue"
-import useAppContext from "../composables/useApp.ts"
+import useAppContext from "../composables/useAppContext.ts"
 import { View } from "../types.ts"
 
 const { setView } = useAppContext()
