@@ -1,5 +1,14 @@
+<script setup lang="ts">
+import useApp from "../composables/useApp.ts"
+import { View } from '../types'
+
+const { setView } = useApp()
+</script>
+
 <template>
-  <button class="group absolute top-2 right-2 p-1 hover:bg-foreground/20 cursor-pointer rounded duration-200">
+  <button
+    class="group absolute top-2 right-2 p-1 hover:bg-foreground/20 cursor-pointer rounded duration-200"
+    @click="setView(View.Menu)">
     <img
       src="/icons/home.svg"
       alt="home"

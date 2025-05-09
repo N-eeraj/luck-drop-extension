@@ -5,11 +5,7 @@ import RandomNumber from "@n-eeraj/random/RandomNumber"
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
 
-const emit = defineEmits([
-  "home",
-])
-
-const diceFace = ref(null)
+const diceFace = ref<number | null>(null)
 const loading = ref(false)
 
 function rollDice() {
@@ -29,7 +25,7 @@ function rollDice() {
     <h1 class="text-xl font-medium">
       Dice Roll
     </h1>
-    <Home @click="emit('home')" />
+    <Home />
 
     <div v-if="loading">
       Rolling...

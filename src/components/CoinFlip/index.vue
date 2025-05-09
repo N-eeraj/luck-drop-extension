@@ -5,11 +5,7 @@ import { randomBoolean } from "@n-eeraj/random"
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
 
-const emit = defineEmits([
-  "home",
-])
-
-const coinFace = ref(null)
+const coinFace = ref<boolean | null>(null)
 const loading = ref(false)
 
 function flipCoin() {
@@ -26,7 +22,7 @@ function flipCoin() {
     <h1 class="text-xl font-medium">
       Coin Flip
     </h1>
-    <Home @click="emit('home')" />
+    <Home />
 
     <div v-if="loading">
       Coin in the air...

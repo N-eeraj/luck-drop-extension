@@ -1,10 +1,9 @@
 <script setup lang="ts">
 import Button from "./Base/Button.vue"
+import useApp from "../composables/useApp.ts"
 import { View } from "../types.ts"
 
-const emit = defineEmits([
-  "menu-selection",
-])
+const { setView } = useApp()
 
 const menuOptions = [
   {
@@ -15,7 +14,7 @@ const menuOptions = [
     label: "Dice Roll",
     value: View.DiceRoll,
   },
-]
+] as const
 </script>
 
 <template>
@@ -30,7 +29,7 @@ const menuOptions = [
         :key="value">
         <Button
           class="w-full"
-          @click="emit('menu-selection', value)">
+          @click="setView(value)">
           {{ label }}
         </Button>
       </li>
