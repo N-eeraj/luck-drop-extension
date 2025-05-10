@@ -1,45 +1,42 @@
 <script setup lang="ts">
 import { ref } from "vue"
-import RandomNumber from "@n-eeraj/random/RandomNumber"
+import { randomBoolean } from "@n-eeraj/random"
 
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
 
-const diceFace = ref<number | null>(null)
+const coinFace = ref<boolean | null>(null)
 const loading = ref(false)
 
-function rollDice() {
+function flipCoin() {
   loading.value = true
   setTimeout(() => {
-    diceFace.value = RandomNumber.int({
-      min: 1,
-      max: 6,
-    })
+    coinFace.value = randomBoolean()
     loading.value = false
   }, 1000)
 }
 </script>
 
 <template>
-  <div>
+  <div class="flex flex-col h-full">
     <h1 class="text-xl font-medium">
-      Dice Roll
+      Coin Flip
     </h1>
     <Home />
 
     <div v-if="loading">
-      Rolling...
+      Coin in the air...
     </div>
 
-    <template v-else-if="diceFace !== null">
-      {{ diceFace }}
+    <template v-else-if="coinFace !== null">
+      {{ coinFace ? "Head" : "Tail" }}
     </template>
 
     <Button
-      class="w-full"
+      class="w-full mt-auto"
       :disabled="loading"
-      @click="rollDice">
-      Roll
+      @click="flipCoin">
+      Flip
     </Button>
   </div>
 </template>
