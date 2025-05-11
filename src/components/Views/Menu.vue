@@ -23,9 +23,15 @@ const menuOptions = [
 
 <template>
   <div class="flex justify-center items-center flex-col gap-y-6">
-    <h1 class="text-foreground text-2xl font-semibold">
-      Luck Drop
-    </h1>
+    <header class="flex items-center gap-x-2">
+      <h1 class="text-foreground text-2xl font-semibold">
+        Luck Drop
+      </h1>
+      <img
+        src="/extension-icon/icon128.png"
+        alt="Luck Drop icon"
+        class="size-8" />
+    </header>
 
     <ul class="w-full px-4 space-y-3">
       <li

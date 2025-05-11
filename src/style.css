@@ -3,11 +3,11 @@
 @layer base {
   :root {
     --background: #f5f7fa;
-    --foreground: #2277df;
+    --foreground: #169745;
 
     &.dark {
       --background: #232323;
-      --foreground: #63b8f1;
+      --foreground: #63f1a8;
     }
   }
 }
