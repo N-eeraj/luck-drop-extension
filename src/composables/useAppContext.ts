@@ -1,4 +1,7 @@
-import { reactive } from "vue"
+import {
+  reactive,
+  watch,
+} from "vue"
 import useContext from "@n-eeraj/use-composables/useContext"
 import { View } from "../types.ts"
 
@@ -15,6 +18,8 @@ export default function useAppContext() {
   function setView(view: View) {
     app.view = view
   }
+
+  watch( () => app.darkMode, () => document.documentElement.classList.toggle("dark"))
 
   const context = useContext(key, {
     app,

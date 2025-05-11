@@ -1,5 +1,8 @@
 <script setup lang="ts">
-import { computed } from "vue"
+import {
+  computed,
+  onMounted,
+} from "vue"
 import Menu from "./components/Views/Menu.vue"
 import CoinFlip from "./components/Views/CoinFlip.vue"
 import DiceRoll from "./components/Views/DiceRoll.vue"
@@ -22,6 +25,8 @@ const AppView = computed(() => {
       return Settings
   }
 })
+
+onMounted(() => app.darkMode && document.documentElement.classList.add("dark"))
 </script>
 
 <template>

@@ -1,6 +1,18 @@
 @import "tailwindcss";
 
+@layer base {
+  :root {
+    --background: #f5f7fa;
+    --foreground: #2277df;
+
+    &.dark {
+      --background: #232323;
+      --foreground: #63b8f1;
+    }
+  }
+}
+
 @theme {
-  --color-background: #f5f7fa;
-  --color-foreground: #3498db;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
 }
