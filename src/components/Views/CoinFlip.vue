@@ -13,30 +13,46 @@ function flipCoin() {
   setTimeout(() => {
     coinFace.value = randomBoolean()
     loading.value = false
-  }, 1000)
+  }, coinFace.value === null ? 1000 : 2000)
 }
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col gap-y-2">
     <h1 class="text-xl font-medium">
       Coin Flip
     </h1>
     <Home />
 
-    <div v-if="loading">
-      Coin in the air...
+    <div class="flex-1 overflow-y-hidden">
+      <Transition mode="out-in">
+        <img
+          v-if="loading"
+          src="/animations/coin-flip.gif"
+          alt="coin flip animation"
+          class="w-20 m-auto -translate-y-full" />
+        <span v-else-if="coinFace !== null">
+          {{ coinFace ? "Head" : "Tail" }}
+        </span>
+      </Transition>
     </div>
 
-    <template v-else-if="coinFace !== null">
-      {{ coinFace ? "Head" : "Tail" }}
-    </template>
-
     <Button
-      class="w-full mt-auto"
+      class="w-full"
       :disabled="loading"
       @click="flipCoin">
       Flip
     </Button>
   </div>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  @apply ease-linear duration-1000;
+}
+
+.v-enter-from, .v-leave-to {
+  @apply translate-y-full;
+}
+</style>

@@ -16,30 +16,49 @@ function rollDice() {
       max: 6,
     })
     loading.value = false
-  }, 1000)
+  }, diceFace.value === null ? 1000 : 2000)
 }
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <div class="flex flex-col gap-y-2">
     <h1 class="text-xl font-medium">
       Dice Roll
     </h1>
     <Home />
 
-    <div v-if="loading">
-      Rolling...
+    <div class="flex-1 overflow-x-hidden">
+      <Transition mode="out-in">
+        <img
+          v-if="loading"
+          src="/animations/die-roll.gif"
+          alt="dice roll animation"
+          class="w-20 m-auto" />
+        <span v-else-if="diceFace !== null">
+          {{ diceFace }}
+        </span>
+      </Transition>
     </div>
 
-    <template v-else-if="diceFace !== null">
-      {{ diceFace }}
-    </template>
-
     <Button
-      class="w-full mt-auto"
+      class="w-full"
       :disabled="loading"
       @click="rollDice">
       Roll
     </Button>
   </div>
 </template>
+
+<style scoped>
+.v-enter-active,
+.v-leave-active {
+  @apply ease-linear duration-1000;
+}
+
+.v-enter-from {
+  @apply -translate-x-[200%];
+}
+.v-leave-to {
+  @apply translate-x-[200%];
+}
+</style>
