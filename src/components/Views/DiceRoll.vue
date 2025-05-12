@@ -1,37 +1,27 @@
 <script setup lang="ts">
-import { ref } from "vue"
+import {
+  ref,
+  computed,
+} from "vue"
 import RandomNumber from "@n-eeraj/random/RandomNumber"
 
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
-import useAppContext from "../../composables/useAppContext"
-
-const { app } = useAppContext()
+import useTriggerAction from "../../composables/useTriggerAction"
 
 const diceFace = ref<number | null>(null)
-const isAnimating = ref(false)
-const loading = ref(false)
+  const isInitialTrigger = computed(() => diceFace.value === null)
 
-const sfx = new Audio("/sfx/dice.mp3")
-
-function rollDice() {
-  loading.value = true
-  isAnimating.value = true
-  const animationTime = diceFace.value === null ? 1000 : 2000
-  if (app.sound) {
-    setTimeout(() => {
-      sfx.play()
-    }, animationTime - 1000)
-  }
-  setTimeout(() => {
-    diceFace.value = RandomNumber.int({
-      min: 1,
-      max: 6,
-    })
-    isAnimating.value = false
-    setTimeout(() =>  loading.value = false, animationTime)
-  }, animationTime)
-}
+const {
+  loading,
+  isAnimating,
+  triggerAction,
+} = useTriggerAction(() => {
+  diceFace.value = RandomNumber.int({
+    min: 1,
+    max: 6,
+  })
+}, isInitialTrigger, "/sfx/dice.mp3")
 </script>
 
 <template>
@@ -57,7 +47,7 @@ function rollDice() {
     <Button
       class="w-full"
       :disabled="loading"
-      @click="rollDice">
+      @click="triggerAction">
       Roll
     </Button>
   </div>
