@@ -4,19 +4,33 @@ import RandomNumber from "@n-eeraj/random/RandomNumber"
 
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
+import useAppContext from "../../composables/useAppContext"
+
+const { app } = useAppContext()
 
 const diceFace = ref<number | null>(null)
+const isAnimating = ref(false)
 const loading = ref(false)
+
+const sfx = new Audio("/sfx/dice.mp3")
 
 function rollDice() {
   loading.value = true
+  isAnimating.value = true
+  const animationTime = diceFace.value === null ? 1000 : 2000
+  if (app.sound) {
+    setTimeout(() => {
+      sfx.play()
+    }, animationTime - 1000)
+  }
   setTimeout(() => {
     diceFace.value = RandomNumber.int({
       min: 1,
       max: 6,
     })
-    loading.value = false
-  }, diceFace.value === null ? 1000 : 2000)
+    isAnimating.value = false
+    setTimeout(() =>  loading.value = false, animationTime)
+  }, animationTime)
 }
 </script>
 
@@ -30,7 +44,7 @@ function rollDice() {
     <div class="flex-1 overflow-x-hidden">
       <Transition mode="out-in">
         <img
-          v-if="loading"
+          v-if="isAnimating"
           src="/animations/die-roll.gif"
           alt="dice roll animation"
           class="w-20 m-auto" />

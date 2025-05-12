@@ -4,16 +4,30 @@ import { randomBoolean } from "@n-eeraj/random"
 
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
+import useAppContext from "../../composables/useAppContext"
+
+const { app } = useAppContext()
 
 const coinFace = ref<boolean | null>(null)
 const loading = ref(false)
+const isAnimating = ref(false)
+
+const sfx = new Audio("/sfx/coin.mp3")
 
 function flipCoin() {
   loading.value = true
+  isAnimating.value = true
+  const animationTime = coinFace.value === null ? 1000 : 2000
+  if (app.sound) {
+    setTimeout(() => {
+      sfx.play()
+    }, animationTime - 1000)
+  }
   setTimeout(() => {
     coinFace.value = randomBoolean()
-    loading.value = false
-  }, coinFace.value === null ? 1000 : 2000)
+    isAnimating.value = false
+    setTimeout(() =>  loading.value = false, animationTime)
+  }, animationTime)
 }
 </script>
 
@@ -27,7 +41,7 @@ function flipCoin() {
     <div class="flex-1 overflow-y-hidden">
       <Transition mode="out-in">
         <img
-          v-if="loading"
+          v-if="isAnimating"
           src="/animations/coin-flip.gif"
           alt="coin flip animation"
           class="w-20 m-auto -translate-y-full" />
