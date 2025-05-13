@@ -7,21 +7,30 @@ import RandomNumber from "@n-eeraj/random/RandomNumber"
 
 import Home from "../Home.vue"
 import Button from "../Base/Button.vue"
-import useTriggerAction from "../../composables/useTriggerAction"
+import useAppContext from "../../composables/useAppContext"
+
+const { app } = useAppContext()
 
 const diceFace = ref<number | null>(null)
-  const isInitialTrigger = computed(() => diceFace.value === null)
+const isAnimating = ref(false)
+const loading = ref(false)
+const sfx = new Audio("/sfx/dice.mp3")
 
-const {
-  loading,
-  isAnimating,
-  triggerAction,
-} = useTriggerAction(() => {
-  diceFace.value = RandomNumber.int({
-    min: 1,
-    max: 6,
-  })
-}, isInitialTrigger, "/sfx/dice.mp3")
+function triggerAction() {
+  loading.value = true
+  isAnimating.value = true
+  if (app.sound) {
+    sfx.play()
+  }
+  setTimeout(() => {
+    diceFace.value = RandomNumber.int({
+      min: 1,
+      max: 6,
+    })
+    isAnimating.value = false
+    setTimeout(() =>  loading.value = false, 1000)
+  }, 1000)
+}
 </script>
 
 <template>
@@ -31,16 +40,20 @@ const {
     </h1>
     <Home />
 
-    <div class="flex-1 overflow-x-hidden">
-      <Transition mode="out-in">
+    <div class="relative grid place-content-center flex-1 overflow-y-hidden">
+      <Transition name="animation">
         <img
           v-if="isAnimating"
           src="/animations/die-roll.gif"
           alt="dice roll animation"
           class="w-20 m-auto" />
-        <span v-else-if="diceFace !== null">
-          {{ diceFace }}
-        </span>
+      </Transition>
+      <Transition name="view">
+        <img
+          v-if="!loading && diceFace !== null"
+          :src="`/images/dice/${diceFace}.svg`"
+          :alt="`dice-face-${diceFace}`"
+          class="size-16" />
       </Transition>
     </div>
 
@@ -54,15 +67,26 @@ const {
 </template>
 
 <style scoped>
-.v-enter-active,
-.v-leave-active {
+.animation-enter-active,
+.animation-leave-active {
   @apply ease-linear duration-1000;
 }
 
-.v-enter-from {
+.animation-enter-from {
   @apply -translate-x-[200%];
 }
-.v-leave-to {
+.animation-leave-to {
   @apply translate-x-[200%];
+}
+
+.view-enter-active {
+  @apply transition-opacity duration-1000;
+}
+.view-leave-active {
+  @apply transition-opacity duration-0;
+}
+
+.view-enter-from, .view-leave-to {
+  @apply opacity-0;
 }
 </style>
