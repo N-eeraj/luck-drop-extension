@@ -1,8 +1,5 @@
 <script setup lang="ts">
-import {
-  ref,
-  computed,
-} from "vue"
+import { ref } from "vue"
 import RandomNumber from "@n-eeraj/random/RandomNumber"
 
 import Home from "../Home.vue"
@@ -34,7 +31,9 @@ function triggerAction() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-2">
+  <section
+    class="flex flex-col gap-y-2"
+    data-cy="die-roll-view">
     <h1 class="text-xl font-medium">
       Dice Roll
     </h1>
@@ -63,7 +62,7 @@ function triggerAction() {
       @click="triggerAction">
       Roll
     </Button>
-  </div>
+  </section>
 </template>
 
 <style scoped>

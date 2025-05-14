@@ -16,7 +16,9 @@ watch(
 </script>
 
 <template>
-  <div class="flex flex-col h-full">
+  <section
+    class="flex flex-col h-full"
+    data-cy="settings-view">
     <h1 class="text-xl font-medium">
       Settings
     </h1>
@@ -35,5 +37,5 @@ watch(
         <Switch v-model="app.sound" />
       </li>
     </ul>
-  </div>
+  </section>
 </template>

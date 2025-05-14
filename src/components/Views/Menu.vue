@@ -22,7 +22,9 @@ const menuOptions = [
 </script>
 
 <template>
-  <div class="flex justify-center items-center flex-col gap-y-6">
+  <section
+    class="flex justify-center items-center flex-col gap-y-6"
+    data-cy="menu-view">
     <header class="flex items-center gap-x-2">
       <h1 class="text-foreground text-2xl font-semibold">
         Luck Drop
@@ -39,10 +41,11 @@ const menuOptions = [
         :key="value">
         <Button
           class="w-full"
+          :data-cy="`${label}-button`"
           @click="setView(value)">
           {{ label }}
         </Button>
       </li>
     </ul>
-  </div>
+  </section>
 </template>

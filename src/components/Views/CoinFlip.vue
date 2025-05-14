@@ -36,7 +36,9 @@ function triggerAction() {
 </script>
 
 <template>
-  <div class="flex flex-col gap-y-2">
+  <section
+    class="flex flex-col gap-y-2"
+    data-cy="coin-flip-view">
     <h1 class="text-xl font-medium">
       Coin Flip
     </h1>
@@ -69,7 +71,7 @@ function triggerAction() {
       @click="triggerAction">
       Flip
     </Button>
-  </div>
+  </section>
 </template>
 
 <style scoped>
