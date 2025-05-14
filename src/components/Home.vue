@@ -11,6 +11,7 @@ const {
 <template>
   <button
     class="group absolute top-2 right-2 p-1 hover:bg-foreground/20 cursor-pointer rounded duration-200"
+    data-cy="home-button"
     @click="setView(View.Menu)">
     <img
       :src="`/icons/home/${app.darkMode ? 'dark' : 'light'}.svg`"

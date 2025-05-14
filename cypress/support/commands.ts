@@ -35,3 +35,13 @@
 //     }
 //   }
 // }
+
+Cypress.Commands.add("getDarkModeToggle", () => {
+  cy.get("[data-cy=\"dark-mode-toggle\"]")
+    .find("[data-cy=\"switch\"]")
+    .as("darkModeToggle")
+
+  cy.get("@darkModeToggle")
+    .find("input[type=\"checkbox\"]")
+    .as("darkModeInput")
+})

@@ -1,0 +1,17 @@
+{
+  "title": "Luck Drop",
+  "menuButtons": [
+    {
+      "text": "Coin Flip",
+      "view": "coin-flip-view"
+    },
+    {
+      "text": "Dice Roll",
+      "view": "die-roll-view"
+    },
+    {
+      "text": "Settings",
+      "view": "settings-view"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+{
+  "preferences": [
+    {
+      "selector": "dark-mode-toggle",
+      "label": "Dark Mode"
+    },
+    {
+      "selector": "sound-toggle",
+      "label": "Sound"
+    }
+  ]
+}

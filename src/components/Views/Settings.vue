@@ -24,14 +24,18 @@ watch(
     </h1>
     <Home />
     <ul class="flex flex-col gap-y-3 mt-3">
-      <li class="flex justify-between items-center">
-        <span>
+      <li
+        class="flex justify-between items-center"
+        data-cy="dark-mode-toggle">
+        <span data-cy="label">
           Dark Mode
         </span>
         <Switch v-model="app.darkMode" />
       </li>
-      <li class="flex justify-between items-center">
-        <span>
+      <li
+        class="flex justify-between items-center"
+        data-cy="sound-toggle">
+        <span data-cy="label">
           Sound
         </span>
         <Switch v-model="app.sound" />
