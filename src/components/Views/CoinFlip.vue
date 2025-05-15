@@ -50,15 +50,19 @@ function triggerAction() {
           v-if="isAnimating"
           src="/animations/coin-flip.gif"
           alt="coin flip animation"
-          class="w-20 -translate-y-full" />
+          class="w-20 -translate-y-full"
+          data-cy="loading-animation" />
         <div
           v-else-if="coinFace !== null"
           class="flex flex-col items-center gap-y-1">
           <img
             :src="`/images/coin-face/${coinFaceText}.webp`"
             :alt="coinFaceText"
-            class="w-12 m-auto" />
-          <span class="capitalize">
+            class="w-12 m-auto"
+            data-cy="coin-face-image" />
+          <span
+            class="capitalize"
+            data-cy="coin-face">
             {{ coinFaceText }}
           </span>
         </div>
@@ -68,6 +72,7 @@ function triggerAction() {
     <Button
       class="w-full"
       :disabled="loading"
+      data-cy="flip-button"
       @click="triggerAction">
       Flip
     </Button>

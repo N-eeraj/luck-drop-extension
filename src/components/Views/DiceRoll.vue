@@ -45,20 +45,23 @@ function triggerAction() {
           v-if="isAnimating"
           src="/animations/die-roll.gif"
           alt="dice roll animation"
-          class="w-20 m-auto" />
+          class="w-20 m-auto"
+          data-cy="loading-animation" />
       </Transition>
       <Transition name="view">
         <img
           v-if="!loading && diceFace !== null"
           :src="`/images/dice/${diceFace}.svg`"
           :alt="`dice-face-${diceFace}`"
-          class="size-16" />
+          class="size-16"
+          data-cy="dice-face-image" />
       </Transition>
     </div>
 
     <Button
       class="w-full"
       :disabled="loading"
+      data-cy="roll-button"
       @click="triggerAction">
       Roll
     </Button>
