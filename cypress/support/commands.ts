@@ -36,12 +36,19 @@
 //   }
 // }
 
-Cypress.Commands.add("getDarkModeToggle", () => {
-  cy.get("[data-cy=\"dark-mode-toggle\"]")
-    .find("[data-cy=\"switch\"]")
-    .as("darkModeToggle")
+Cypress.Commands.add("checkPreferenceState", (isEnabled: boolean, { selector, localStorageKey , defaultValue }) => {
+    cy.get(`[data-cy="${selector}"]`)
+      .find("[data-cy=\"switch\"]")
+      .as("toggle")
 
-  cy.get("@darkModeToggle")
-    .find("input[type=\"checkbox\"]")
-    .as("darkModeInput")
-})
+    cy.get("@toggle")
+      .find("input[type=\"checkbox\"]")
+      .as("input")
+
+    cy.get("@input").should(isEnabled ? "be.checked" : "not.be.checked")
+    cy.window()
+      .its("localStorage")
+      .invoke("getItem", "preference")
+      .then((data) => expect(JSON.parse(data ?? "{}")[localStorageKey] ?? defaultValue).to.equal(isEnabled))
+  }
+)

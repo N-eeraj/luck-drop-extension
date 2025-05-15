@@ -1,6 +1,11 @@
 describe("Settings Test", () => {
+  let preferences
+
   beforeEach(() => {
     cy.visit(Cypress.env("BASE_URL"))
+    cy.fixture("settings").then((data) => {
+      preferences = data.preferences
+    })
     cy.get("button").contains("Settings").click()
     cy.get("[data-cy=\"settings-view\"]").should("exist")
   })
@@ -15,69 +20,77 @@ describe("Settings Test", () => {
   })
 
   it("Checks settings view has dark mode & sound toggle", () => {
-    cy.fixture("settings").then(({ preferences }) => {
-      preferences.forEach(({ selector, label }) => {
-        cy.get(`[data-cy="${selector}"]`)
-          .should("be.visible")
-          .as("option")
+    preferences.forEach(({ selector, label }) => {
+      cy.get(`[data-cy="${selector}"]`)
+        .should("be.visible")
+        .as("option")
 
-        cy.get("@option")
-          .find("[data-cy=\"label\"]")
-          .invoke("text")
-          .then((text) => {
-            expect(text.trim()).to.equal(label)
-          })
+      cy.get("@option")
+        .find("[data-cy=\"label\"]")
+        .invoke("text")
+        .then((text) => {
+          expect(text.trim()).to.equal(label)
+        })
 
-        cy.get("@option")
-          .find("[data-cy=\"switch\"]")
-          .find("input[type=\"checkbox\"]")
-          .should("exist")
-      })
+      cy.get("@option")
+        .find("[data-cy=\"switch\"]")
+        .find("input[type=\"checkbox\"]")
+        .should("exist")
     })
   })
 
   it("Checks dark mode toggle", () => {
+    const darkStateParams = preferences.find(({ label }) => label === "Dark Mode")
+
     // Initial check
-    cy.getDarkModeToggle()
-    cy.get("@darkModeInput").should("not.be.checked")
-
+    cy.checkPreferenceState(false, darkStateParams)
+    cy.get("html").should("not.have.class", "dark")
+  
     // Toggle ON
-    cy.get("@darkModeToggle").click()
-    cy.get("@darkModeInput").should("be.checked")
+    cy.get("@toggle").click()
+    cy.checkPreferenceState(true, darkStateParams)
     cy.get("html").should("have.class", "dark")
-
-    // Check localStorage
-    cy.window()
-      .its("localStorage")
-      .invoke("getItem", "preference")
-      .then((data) => JSON.parse(data ?? "{}"))
-      .its("darkMode")
-      .should("equal", true)
-
+  
     // Reload and re-verify
     cy.reload()
-    cy.get("html").should("have.class", "dark")
     cy.get("button").contains("Settings").click()
-    
-    // Re-alias after reload
-    cy.getDarkModeToggle()
-    cy.get("@darkModeInput").should("be.checked")
-    
-    // Toggle OFF
-    cy.get("@darkModeToggle").click()
-    cy.get("@darkModeInput").should("not.be.checked")
-    cy.get("html").should("not.have.class", "dark")
+    cy.checkPreferenceState(true, darkStateParams)
+    cy.get("html").should("have.class", "dark")
 
+    // Toggle OFF
+    cy.get("@toggle").click()
+    cy.checkPreferenceState(false, darkStateParams)
+    cy.get("html").should("not.have.class", "dark")
+  
     // Reload again
     cy.reload()
+    cy.get("button").contains("Settings").click()
+    cy.checkPreferenceState(false, darkStateParams)
     cy.get("html").should("not.have.class", "dark")
+  })
 
-    // Check localStorage is false
-    cy.window()
-      .its("localStorage")
-      .invoke("getItem", "preference")
-      .then((data) => JSON.parse(data ?? "{}"))
-      .its("darkMode")
-      .should("equal", false)
+  it("Checks sound toggle", () => {
+    const soundStateParams = preferences.find(({ label }) => label === "Sound")
+
+    // Initial check
+    cy.checkPreferenceState(true, soundStateParams)
+  
+    // Toggle OFF
+    cy.get("@toggle").click()
+    cy.checkPreferenceState(false, soundStateParams)
+  
+    // Reload and re-verify
+    cy.reload()
+    cy.get("button").contains("Settings").click()
+    cy.checkPreferenceState(false, soundStateParams)
+
+    // Toggle ON
+    cy.get("@toggle").click()
+    cy.checkPreferenceState(true, soundStateParams)
+  
+    // Reload again
+    cy.reload()
+    cy.get("button").contains("Settings").click()
+    cy.checkPreferenceState(true, soundStateParams)
   })
 })

@@ -2,11 +2,15 @@
   "preferences": [
     {
       "selector": "dark-mode-toggle",
-      "label": "Dark Mode"
+      "label": "Dark Mode",
+      "localStorageKey": "darkMode",
+      "defaultValue": false
     },
     {
       "selector": "sound-toggle",
-      "label": "Sound"
+      "label": "Sound",
+      "localStorageKey": "sound",
+      "defaultValue": true
     }
   ]
 }
